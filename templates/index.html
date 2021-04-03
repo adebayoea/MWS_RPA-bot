@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Form</title>
+</head>
+<body>
+	<div class="alert">
+		<p>Submission Successful</p>
+	</div>
+	<main class="yellow">
+		<form  id="app-form" action="" >
+			<label for="filed_row">Filed Row</label> 
+			<input required  type="number" id="filed_row" name="filed_row" placeholder="Enter value here...">
+			
+			<label for="chunk_size">Chunk Size</label> 
+			<input required  type="number" id="chunk_size" name="chunk_size" placeholder="Enter value here...">
+			
+			<label for="chunk_start_position">Chunk Size Position</label> 
+			<input required  type="number" id="chunk_start_position" name="chunk_start_position" placeholder="Enter value here...">
+
+
+
+			 <label for="seller_id">Seller ID</label> 
+			<input required  type="text" id="seller_id" name="seller_id" placeholder="Enter value here...">
+
+			<label for="wait_time">Wait Time</label> 
+			<input required  type="number" min="3" max="5"  id="wait_time" name="wait_time" placeholder="Value must range from 3 to 5...">
+
+			<label class="click-drag-label" for="fname">
+				<p class="labeled">Fname</p>
+	<div class="flexy">
+		<div>
+			<div class="click-drag">Click or drop file here</div>
+			<input required  type="file" id="test" name='fname'  accept="text/plain">
+		</div>
+				<p id="filename"></p>
+	</div>
+
+			  </label>
+
+			  <label class="secret-key pw" for="secret_key">Secret Key</label> 
+			 <div class="abs">
+				<input required  type="password" id="secret_key" name="secret_key"></input>
+				<button onclick="toggler(this)" type="button">Show</button>
+			 </div>
+
+			 <label class="aws_access_key pw" for="aws_access_key">AWS access Key</label> 
+			 <div class="abs">
+				<input required  type="password" id="aws_access_key" name="aws_access_key"></input>
+				<button onclick="toggler2(this)" type="button">Show</button>
+			 </div>
+
+			 <label class="auth_token pw" for="auth_token">Auth Token</label> 
+			 <div class="abs">
+				<input required  type="password" id="auth_token" name="auth_token"></input>
+				<button onclick="toggler3(this)" type="button">Show</button>
+			 </div>
+			 
+			<div class="submit-btn">
+	<button type="submit" id="submit">Submit</button>
+
+</div>
+		</form>
+	</main>
+	<script src="script.js"></script>
+</body>
+</html>
