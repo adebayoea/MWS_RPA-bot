@@ -51,9 +51,9 @@ def get_flat_file_name():
 def get_res_file_name():
     return "OGK_update_response_{}.txt".format(datetime.now().strftime("%Y%m%d_%H%M%S"))
 
-def create_upload_file(dbf_name,f_row):
-    chunk_size = 500 #***1     enter amount of product items. type int()
-    chunk_start_position = 3 #***2     enter row num of the first item. type int()
+def create_upload_file(dbf_name, f_row, chunk_size, chunk_start_position):
+    # chunk_size = 500 #***1     enter amount of product items. type int()
+    # chunk_start_position = 3 #***2     enter row num of the first item. type int()
     chunk_end_position = chunk_start_position + chunk_size
     db_file = readlinefile(dbf_name)
     print(len(db_file)-chunk_start_position)
@@ -109,11 +109,13 @@ def create_upload_file(dbf_name,f_row):
         #print(flat_file_names)
     return flat_file_names
 
-field_row = 3 #***3     enter number of field rows. type int()
-fname = "filename.txt" #***4     enter filename for upload. type str()
-flat_file_names = create_upload_file(fname,field_row)
+# field_row = 3 #***3     enter number of field rows. type int()
+# fname = "filename.txt" #***4     enter filename for upload. type str()
+
+
+# flat_file_names = create_upload_file(fname,field_row)
 r_fname = "MWS_responce_{}.xlsx".format(iso8601timestamp())
-Secre_Key = "the secret key goes here" #***5     seller account secret key here. type str()
+# Secre_Key = "the secret key goes here" #***5     seller account secret key here. type str()
 HTTPVerb = "POST"
 Protoc = "https://"
 MWSEndpoints = {"DE":"mws-eu.amazonservices.com","GB":"mws-eu.amazonservices.com",
@@ -125,60 +127,60 @@ MWSHost = MWSEndpoints["DE"].lower()
 HTTPRequestURI = "/Feeds/2009-01-01"
 url = Protoc + MWSHost + HTTPRequestURI
 
-#def get_params()
-for f_fname in flat_file_names:
-    params = {}
-    params["AWSAccessKeyId"] = "enter access key here" #***6     Access key here. type str()
-    params["MWSAuthToken"] = "enter auth token value here" #***7     Authentication token here. type str()
-    params["SellerId"] = "enter seller id here" #***8    enter seller id here. type str()
-    params["SignatureMethod"] = "HmacSHA256"
-    params["SignatureVersion"] = "2"
-    params["Timestamp"] = iso8601timestamp()        #   Create and Add ISO-8601 Timestamp to <params>
-    params["Version"] = "2009-01-01"
-    params["Action"] = "SubmitFeed"
-    params["FeedType"] = "_POST_FLAT_FILE_LISTINGS_DATA_"
-    params["MarketplaceIdList.Id.1"] = "A1PA6795UKMFR9"
-    params["PurgeAndReplace"] = "false"
-    params["ContentMD5Value"] = flat_file_names[f_fname]    #   Create Base64 MD5-hash of FeedContent
-#    print(params["ContentMD5Value"] +"\n")
+def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, wait_time):
+    for f_fname in flat_file_names:
+        params = {}
+        params["AWSAccessKeyId"] = AWSAccessKeyId #***6     Access key here. type str()
+        params["MWSAuthToken"] = MWSAuthToken #***7     Authentication token here. type str()
+        params["SellerId"] = SellerId #***8    enter seller id here. type str()
+        params["SignatureMethod"] = "HmacSHA256"
+        params["SignatureVersion"] = "2"
+        params["Timestamp"] = iso8601timestamp()        #   Create and Add ISO-8601 Timestamp to <params>
+        params["Version"] = "2009-01-01"
+        params["Action"] = "SubmitFeed"
+        params["FeedType"] = "_POST_FLAT_FILE_LISTINGS_DATA_"
+        params["MarketplaceIdList.Id.1"] = "A1PA6795UKMFR9"
+        params["PurgeAndReplace"] = "false"
+        params["ContentMD5Value"] = flat_file_names[f_fname]    #   Create Base64 MD5-hash of FeedContent
+    #    print(params["ContentMD5Value"] +"\n")
 
-    CanonicKV = canonic_query_str(params)
-    StrToSign = "{}\n{}\n{}\n{}".format(HTTPVerb,MWSHost, HTTPRequestURI, CanonicKV)
-#    print(StrToSign + "\n")
-    params["Signature"] = get_SHA256(StrToSign, Secre_Key)  #   Create Signature (Base64-Hmac-SHA256) of StrToSign
-    #print(params["Signature"])
+        CanonicKV = canonic_query_str(params)
+        StrToSign = "{}\n{}\n{}\n{}".format(HTTPVerb,MWSHost, HTTPRequestURI, CanonicKV)
+    #    print(StrToSign + "\n")
+        params["Signature"] = get_SHA256(StrToSign, Secre_Key)  #   Create Signature (Base64-Hmac-SHA256) of StrToSign
+        #print(params["Signature"])
 
-#   Create HTTP Header
-    headers = {}
-    headers["User-Agent"] = "Online-GalleryKing/amws.app.adebayoea0.1 (Language=Python/3.8; Platform=Windows/10/pro)"
-    headers["Content-Type"] = "application/x-www-form-urlencoded"
-    headers["Host"] = MWSHost
-    headers["ContentMD5Value"] = params["ContentMD5Value"]
+    #   Create HTTP Header
+        headers = {}
+        headers["User-Agent"] = "Online-GalleryKing/amws.app.adebayoea0.1 (Language=Python/3.8; Platform=Windows/10/pro)"
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        headers["Host"] = MWSHost
+        headers["ContentMD5Value"] = params["ContentMD5Value"]
 
-#   Query request
-    print("sending request...\n\n")
+    #   Query request
+        print("sending request...\n\n")
 
-    r = request(HTTPVerb, url, params = params, data = readfile(f_fname), headers = headers)
-    print(r.status_code)
-    print(type(r.status_code))
-    print(r.headers)
-    print(type(r.headers))
-    print("\n" + r.text + "\n" )
-    r_content = r.content
-    #print(r_content.decode("utf-8"))
+        r = request(HTTPVerb, url, params = params, data = readfile(f_fname), headers = headers)
+        print(r.status_code)
+        print(type(r.status_code))
+        print(r.headers)
+        print(type(r.headers))
+        print("\n" + r.text + "\n" )
+        r_content = r.content
+        #print(r_content.decode("utf-8"))
 
-    res_file_name = get_res_file_name()
-    with open(res_file_name, 'wb') as f:
-        for chunk in r.iter_content(chunk_size=256):
-            f.write(chunk)
-    wait_time = 20 #***9    interface for time before next upload. type int()
-    dt = datetime.now() + timedelta(minutes = wait_time)
-    #wait_time_count = 0
-    while datetime.now() < dt:
-        print("\nHochladen erfolgreich!")
-        time.sleep(310)
-        wait_time = wait_time - 5
-        print("\n\n...The next upload will start in {} minutes.".format(wait_time))
-        print("\ngoin to sleep...", datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
-    print("#\n#\n#\nThe next upload is now being sent...")
+        res_file_name = get_res_file_name()
+        with open(res_file_name, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=256):
+                f.write(chunk)
+        # wait_time = 20 #***9    interface for time before next upload. type int()
+        dt = datetime.now() + timedelta(minutes = wait_time)
+        #wait_time_count = 0
+        while datetime.now() < dt:
+            print("\nHochladen erfolgreich!")
+            time.sleep(310)
+            wait_time = wait_time - 5
+            print("\n\n...The next upload will start in {} minutes.".format(wait_time))
+            print("\ngoin to sleep...", datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
+        print("#\n#\n#\nThe next upload is now being sent...")
 print("All data have been processed!")
