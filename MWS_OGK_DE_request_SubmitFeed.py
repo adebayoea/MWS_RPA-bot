@@ -42,7 +42,7 @@ def iso8601timestamp():
     return timestamp
 
 def readlinefile(fn):
-    db = open(fn,"r")
+    db = open(fn,"r", encoding='utf-8', errors='ignore')
     return db.readlines()
 
 def get_flat_file_name():
@@ -63,7 +63,7 @@ def create_upload_file(dbf_name, f_row, chunk_size, chunk_start_position):
         if chunk_end_position < len(db_file):
             flat_file_name = get_flat_file_name()
             print(flat_file_name)
-            wfile = open(flat_file_name,"w")
+            wfile = open(flat_file_name,"w", encoding='utf-8', errors='ignore')
             for line in db_file[:3]:
                 wfile.write(line)
             if file_writen_count < 1:
@@ -95,7 +95,7 @@ def create_upload_file(dbf_name, f_row, chunk_size, chunk_start_position):
         else:
             flat_file_name = get_flat_file_name()
             print(flat_file_name)
-            wfile = open(flat_file_name,"w")
+            wfile = open(flat_file_name,"w", encoding='utf-8', errors='ignore')
             for line in db_file[:3]:
                 wfile.write(line)
             for line in db_file[chunk_start_position : ]:
@@ -116,6 +116,8 @@ def create_upload_file(dbf_name, f_row, chunk_size, chunk_start_position):
 # flat_file_names = create_upload_file(fname,field_row)
 r_fname = "MWS_responce_{}.xlsx".format(iso8601timestamp())
 # Secre_Key = "the secret key goes here" #***5     seller account secret key here. type str()
+
+
 HTTPVerb = "POST"
 Protoc = "https://"
 MWSEndpoints = {"DE":"mws-eu.amazonservices.com","GB":"mws-eu.amazonservices.com",
@@ -170,7 +172,7 @@ def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerI
         #print(r_content.decode("utf-8"))
 
         res_file_name = get_res_file_name()
-        with open(res_file_name, 'wb') as f:
+        with open(res_file_name, 'wb', encoding='utf-8', errors='ignore') as f:
             for chunk in r.iter_content(chunk_size=256):
                 f.write(chunk)
         # wait_time = 20 #***9    interface for time before next upload. type int()
