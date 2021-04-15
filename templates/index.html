@@ -1,73 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{{ url_for('static', filename= 'style.css')}}">
-	<!-- <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css')}}" /> -->
-	<title>Form</title>
-</head>
-<body>
-	<div class="alert">
-		<p>Submission Successful</p>
-	</div>
-	<main class="yellow">
-		<form  id="app-form" action="/" method="POST" enctype="multipart/form-data">
-			<label for="filed_row">Filed Row</label> 
-			<input required  type="number" id="filed_row" name="filed_row" placeholder="Enter value here...">
-			
-			<label for="chunk_size">Chunk Size</label> 
-			<input required  type="number" id="chunk_size" name="chunk_size" placeholder="Enter value here...">
-			
-			<label for="chunk_start_position">Chunk Size Position</label> 
-			<input required  type="number" id="chunk_start_position" name="chunk_start_position" placeholder="Enter value here...">
-
-
-
-			 <label for="seller_id">Seller ID</label> 
-			<input required  type="text" id="seller_id" name="seller_id" placeholder="Enter value here...">
-
-			<label for="wait_time">Wait Time</label> 
-			<input required  type="number" min="3" max="5"  id="wait_time" name="wait_time" placeholder="Value must range from 3 to 5...">
-
-			<label class="click-drag-label" for="fname">
-				<p class="labeled">File name</p>
-	<div class="flexy">
-		<div>
-			<div class="click-drag">Click or drop file here</div>
-			<input required  type="file" id="test" name='fname'  accept="text/plain">
-		</div>
-				<p id="filename"></p>
-	</div>
-
-			  </label>
-
-			  <label class="secret-key pw" for="secret_key">Secret Key</label> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=
+	, initial-scale=1.0"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css')}}">
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <div class="lhs side">
+        <div class="sidebar">
+          <form action="/" method="POST" enctype="multipart/form-data">
+            
+	<div class="grid">
+    <label for="seller_id">Seller ID</label> 
+    <input type="text" id="seller_id" name="seller_id" placeholder="Enter value here...">
+  </div>
+       <div class="grid">
+        <label class="aws_access_ID pw" for="aws_access_ID">AWS access ID</label> 
+        <div class="abs">
+         <input type="password" id="aws_access_ID" name="aws_access_ID"></input>
+         <button onclick="toggler2(this)" type="button">Show</button>
+        </div>
+       </div>
+<div class="grid">
+  <label class="mws_auth_token pw" for="mws_auth_token">MWS Auth Token</label> 
 			 <div class="abs">
-				<input required  type="password" id="secret_key" name="secret_key"></input>
-				<button onclick="toggler(this)" type="button">Show</button>
-			 </div>
-
-			 <label class="aws_access_key pw" for="aws_access_key">AWS access Key</label> 
-			 <div class="abs">
-				<input required  type="password" id="aws_access_key" name="aws_access_key"></input>
-				<button onclick="toggler2(this)" type="button">Show</button>
-			 </div>
-
-			 <label class="auth_token pw" for="auth_token">Auth Token</label> 
-			 <div class="abs">
-				<input required  type="password" id="auth_token" name="auth_token"></input>
+				<input type="password" id="mws_auth_token" name="mws_auth_token"></input>
 				<button onclick="toggler3(this)" type="button">Show</button>
 			 </div>
-			 
-			<div class="submit-btn">
-	<button type="submit" id="submit">Submit</button>
+</div>
+<div class="grid">
+  
+  <label class="secret-key pw" for="secret_key">Secret Key</label> 
+  <div class="abs">
+   <input type="password" id="secret_key" name="secret_key"></input>
+   <button onclick="toggler(this)" type="button">Show</button>
+  </div>
+</div>
+<div class="grid">
+  <label for="market_place">Market Place</label> 
+  <input type="text" id="market_place" name="market_place" >
+  
+ </div>
+          </form>
+
+          <div class="tabs mt-30">
+    <p class="tab is-active"><a href="#tab-one">Submit Inventory</a></p>
+    <p class="tab"><a href="#tab-two">Submission Result</a></p>
+    <p class="tab"><a href="#tab-three">Submission List</a></p>
+          </div>
+        </div>
+      </div>
+     
+      <div class="gridy">
+        <div class="my-tabs">
+          <nav class="tabs">
+            <ul>
+              <li class="is-active tab"><a href="#tab-one">Submit Inventory</a></li>
+              <li class="tab"><a href="#tab-two">Submission Result</a></li>
+              <li class="tab"><a href="#tab-three">Submission List</a></li>
+            </ul>
+          </nav>
+
+          <section class="tab-content is-active" id="tab-one">
+            <form id="app-form" action="/" method="POST" enctype="multipart/form-data">
+              <div class="w-100">
+                  <div class="">
+                    <label for="file_path">File Path</label>
+
+                    <input type="file" id="file" name='file_path'  accept="text/plain">
+                  </div>
+                      <!-- <p id="filename"></p> -->
+
+               <div class="">
+                <label for="field_row">Field Row</label>
+                <input
+                                  type="number"
+                  id="filed_row"
+                  name="filed_row"
+                  placeholder="Enter value here..."
+                />
+               </div>
+             <div class="">
+              <label for="chunk_size">Chunk Size</label> 
+              <input type="number" id="chunk_size" name="chunk_size" placeholder="Enter value here...">
+              
+             </div>
+              </div>
+
+             <div  class="w-100">
+             <div class="">
+              <label for="inventory_start_position">Inventory Start Position</label> 
+              <input type="number" id="inventory_start_position" name="inventory_start_position" placeholder="Enter value here...">
+             
+             </div>
+              <div class="">
+                <label for="request_interval">Request Interval</label> 
+			<input type="number" min="3" max="15"  id="request_interval" name="request_interval" placeholder="Value must range from 3 to 5...">
+
+              </div>
+             </div>
+            
+            
+<div class="below">
+  <button type="submit" class="green btn btns mr-30" value="Start" name="action">Start</button>     
+  <button  type="button" class="orange btn btns">Cancel</button>
 
 </div>
-		</form>
-	</main>
-	<script src="{{ url_for('static', filename= 'script.js')}}"></script>
-	
-</body>
+</form>
+
+          </section>
+          <section class="tab-content" id="tab-two">
+            <h1>two</h1>
+          </section>
+          <section class="tab-content" id="tab-three">
+            <h1>Hello 3</h1>
+          </section>
+        </div>
+      </div>
+      <div class="rhs side">
+        <div class="sidebar">
+          <div class="flexy">
+            <p class="text">ID1</p> <button class="green btn">Status</button>
+          </div>
+          <div class="flexy">
+            <p class="text">ID2</p> <button class="green btn">Status</button>
+          </div>
+          <div class="flexy">
+            <p class="text">ID3</p> <button class="orange btn">Status</button>
+          </div>
+          <div class="flexy">
+            <p class="text">ID4</p> <button class="green btn">Status</button>
+          </div>
+          <div class="flexy">
+            <p class="text">ID5</p> <button class="green btn">Status</button>
+          </div>
+
+          <div><button type="button" class="green btn btns mb-15">Check</button></div>
+<div>          <button  type="button" class="orange btn btns">Stop</button>
+</div>
+      </div>
+    </main>
+    <script src="{{ url_for('static', filename= 'script.js')}}"></script>
+  </body>
 </html>

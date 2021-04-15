@@ -1,71 +1,58 @@
-// click or drag file
-var fileInput = document.querySelector("input[type=file]");
-var filenameContainer = document.querySelector("#filename");
-var dropzone = document.querySelector("div");
+const tabs = document.querySelectorAll(" .tabs .tab");
+const sections = document.querySelectorAll(" .tab-content");
 
-fileInput.addEventListener("change", function () {
-  filenameContainer.innerText = fileInput.value.split("\\").pop();
+tabs.forEach((tab) => {
+  tab.addEventListener("click", (e) => {
+    e.preventDefault();
+    removeActiveTab();
+    addActiveTab(tab);
+  });
 });
 
-fileInput.addEventListener("dragenter", function () {
-  dropzone.classList.add("dragover");
-});
+const removeActiveTab = () => {
+  tabs.forEach((tab) => {
+    tab.classList.remove("is-active");
+  });
+  sections.forEach((section) => {
+    section.classList.remove("is-active");
+  });
+};
 
-fileInput.addEventListener("dragleave", function () {
-  dropzone.classList.remove("dragover");
-});
+const addActiveTab = (tab) => {
+  tab.classList.add("is-active");
+  const href = tab.querySelector("a").getAttribute("href");
+  const matchingSection = document.querySelector(href);
+  matchingSection.classList.add("is-active");
+};
 
 // password toggler
-function toggler(e) {
+function toggler1(e) {
   if (e.innerHTML == "Show") {
     e.innerHTML = "Hide";
-    document.getElementById("secret_key").type = "text";
+    document.getElementById("password1").type = "text";
   } else {
     e.innerHTML = "Show";
-    document.getElementById("secret_key").type = "password";
+    document.getElementById("password1").type = "password";
   }
 }
 // password toggler
 function toggler2(e) {
   if (e.innerHTML == "Show") {
     e.innerHTML = "Hide";
-    document.getElementById("aws_access_key").type = "text";
+    document.getElementById("password2").type = "text";
   } else {
     e.innerHTML = "Show";
-    document.getElementById("aws_access_key").type = "password";
+    document.getElementById("password2").type = "password";
   }
 }
 // password toggler
 function toggler3(e) {
   if (e.innerHTML == "Show") {
     e.innerHTML = "Hide";
-    document.getElementById("auth_token").type = "text";
+    document.getElementById("password3").type = "text";
   } else {
     e.innerHTML = "Show";
-    document.getElementById("auth_token").type = "password";
+    document.getElementById("password3").type = "password";
   }
 }
 
-// disable submit btn until all fields are filled
-
-const submit_btn = document.getElementById("submit");
-
-submit_btn.disabled = true;
-let d = document,
-  [inputs] = [d.querySelectorAll("input")];
-submit_btn.disabled = true;
-
-for (i = 0; i < inputs.length; i++) {
-  inputs[i].addEventListener("input", () => {
-    let values = [];
-    inputs.forEach((v) => values.push(v.value));
-    submit_btn.disabled = values.includes("");
-  });
-}
-//form Submission
-const alert = document.querySelector(".alert");
-const wait_time = document.querySelector("#wait_time");
-
-submit_btn.onclick = () => {
-  alert.classList.add("show");
-};

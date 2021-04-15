@@ -1,5 +1,5 @@
 from MWS_OGK_DE_request_SubmitFeed import create_upload_file, get_params
-from flask import Flask,render_template,request,flash, redirect
+from flask import Flask,render_template,request,flash, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
 
@@ -34,25 +34,29 @@ def index():
 @app.route('/', methods = ['POST'])
 def upload():
     if request.method == 'POST':
-# entering the create_upload_file
-        chunk_size = request.form['chunk_size']
-        chunk_start_postion = request.form['chunk_start_position']
-        field_row = request.form['filed_row']
-        fname = request.files['fname']
-        fname = upload_image(fname)
 
 # entering the function get prams
-        Secre_Key = request.form['secret_key']
-        AWSAccessKeyId = request.form['aws_access_key']
-        MWSAuthToken= request.form['auth_token']
-        SellerId= request.form['seller_id']
-        wait_time = request.form['wait_time']
+        # Secre_Key = request.form['secret_key']
+        # AWSAccessKeyId = request.form['aws_access_ID']
+        # MWSAuthToken= request.form['mws_auth_token']
+        # SellerId= request.form['seller_id']
+        
+
+# entering the create_upload_file
+        if request.form['action'] == 'Start':
+            chunk_size = request.form['chunk_size']
+            chunk_start_postion = request.form['inventory_start_position']
+            wait_time = request.form['request_interval']
+            field_row = request.form['filed_row']
+            fname = request.files['file_path']
+            fname = upload_image(fname)
+
 
         flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
         # output = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, wait_time)
 
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=True, threaded=True)
