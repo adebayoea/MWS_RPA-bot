@@ -1,4 +1,5 @@
 from requests import request
+import xml.etree.ElementTree as ET
 import urllib
 import json
 import hashlib
@@ -175,6 +176,13 @@ def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerI
         with open(res_file_name, 'wb', encoding='utf-8', errors='ignore') as f:
             for chunk in r.iter_content(chunk_size=256):
                 f.write(chunk)
+
+        res_file_tree = ET.parse(res_file_name)
+        res_file_root = res_file_tree.getroot()
+
+        FeedSubmissionId = res_file_root[0][0][0].text #**** Submission Id <------Emmanuel this is new field
+        FeedProcessingStatus = res_file_root[0][0][3].text.strip("_") #**** Processing Status  <------Emmanuel this is new field
+        
         # wait_time = 20 #***9    interface for time before next upload. type int()
         dt = datetime.now() + timedelta(minutes = wait_time)
         #wait_time_count = 0
