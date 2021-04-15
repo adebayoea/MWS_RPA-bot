@@ -176,6 +176,7 @@ for f_fname in flat_file_names:
     res_file_tree = ET.parse(res_file_name)
     res_file_root = res_file_tree.getroot()
 
+    
     FeedSubmissionId = res_file_root[0][0][0].text #**** Submission Id <------Emmanuel this is new field
     FeedProcessingStatus = res_file_root[0][0][3].text.strip("_") #**** Processing Status  <------Emmanuel this is new field
 
