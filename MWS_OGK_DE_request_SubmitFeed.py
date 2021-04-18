@@ -194,5 +194,6 @@ def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerI
             print("\n\n...The next upload will start in {} minutes.".format(wait_time))
             print("\ngoin to sleep...", datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
         print("#\n#\n#\nThe next upload is now being sent...")
+
         return FeedSubmissionId, FeedProcessingStatus
 print("All data have been processed!")
