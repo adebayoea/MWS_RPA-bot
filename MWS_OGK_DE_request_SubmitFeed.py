@@ -130,7 +130,8 @@ MWSHost = MWSEndpoints["DE"].lower()
 HTTPRequestURI = "/Feeds/2009-01-01"
 url = Protoc + MWSHost + HTTPRequestURI
 
-def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, wait_time):
+def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, MarketplaceIdList
+, wait_time):
     for f_fname in flat_file_names:
         params = {}
         params["AWSAccessKeyId"] = AWSAccessKeyId #***6     Access key here. type str()
@@ -142,7 +143,7 @@ def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerI
         params["Version"] = "2009-01-01"
         params["Action"] = "SubmitFeed"
         params["FeedType"] = "_POST_FLAT_FILE_LISTINGS_DATA_"
-        params["MarketplaceIdList.Id.1"] = "A1PA6795UKMFR9"
+        params["MarketplaceIdList.Id.1"] = MarketplaceIdList
         params["PurgeAndReplace"] = "false"
         params["ContentMD5Value"] = flat_file_names[f_fname]    #   Create Base64 MD5-hash of FeedContent
     #    print(params["ContentMD5Value"] +"\n")
@@ -193,4 +194,5 @@ def get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerI
             print("\n\n...The next upload will start in {} minutes.".format(wait_time))
             print("\ngoin to sleep...", datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
         print("#\n#\n#\nThe next upload is now being sent...")
+        return FeedSubmissionId, FeedProcessingStatus
 print("All data have been processed!")

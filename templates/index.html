@@ -117,17 +117,49 @@
 
           </section>
           <section class="tab-content" id="tab-two">
-            <h1>two</h1>
+            <form method="POST" action="/">
+            <div class="">
+              <label for="sub_id1">Submission ID 1</label> 
+              <input type="number" id="sub_id1" name="sub_id1" placeholder="Enter value here...">
+              
+             </div>
+             
+            <!-- <div class="">
+              <label for="sub_id2">Submission ID 2</label> 
+              <input type="number" id="sub_id2" name="sub_id2" placeholder="Enter value here...">
+              
+             </div> -->
+             <div class="below">
+              <button type="button" class="green btn btns mr-30" name="action" value="Check">Check</button>     
+            
+            </div>
+            </form>
           </section>
+
           <section class="tab-content" id="tab-three">
-            <h1>Hello 3</h1>
+            <form method="POST" action="/">
+            <div class="">
+              <label for="sub_id">Submission ID</label> 
+              <input type="number" id="sub_id" name="sub_id" placeholder="Enter value here...">
+              
+             </div>
+            <div class="">
+              <label for="sub_status">Submission Status</label> 
+              <input type="number" id="sub_status" name="sub_status" placeholder="Enter value here...">
+              
+             </div>
+             <div class="below">
+              <button type="button" class="green btn btns mr-30" name="action" value="check1">Check</button>     
+            
+            </div>
+          </form>
           </section>
         </div>
       </div>
       <div class="rhs side">
         <div class="sidebar">
           <div class="flexy">
-            <p class="text">ID1</p> <button class="green btn">Status</button>
+            <p class="text">{{id}}</p> <button class="green btn">{{status}}</button>
           </div>
           <div class="flexy">
             <p class="text">ID2</p> <button class="green btn">Status</button>

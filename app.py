@@ -1,4 +1,5 @@
 from MWS_OGK_DE_request_SubmitFeed import create_upload_file, get_params
+from GetFeedSubmissionResult import get_prams_status
 from flask import Flask,render_template,request,flash, redirect, url_for
 from werkzeug.utils import secure_filename
 import os
@@ -36,10 +37,11 @@ def upload():
     if request.method == 'POST':
 
 # entering the function get prams
-        # Secre_Key = request.form['secret_key']
-        # AWSAccessKeyId = request.form['aws_access_ID']
-        # MWSAuthToken= request.form['mws_auth_token']
-        # SellerId= request.form['seller_id']
+        Secre_Key = request.form['secret_key']
+        AWSAccessKeyId = request.form['aws_access_ID']
+        MWSAuthToken= request.form['mws_auth_token']
+        SellerId= request.form['seller_id']
+        MarketplaceIdList = request.form['market_place']
         
 
 # entering the create_upload_file
@@ -52,10 +54,24 @@ def upload():
             fname = upload_image(fname)
 
 
-        flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
-        # output = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, wait_time)
+            flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
+            id, status = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, MarketplaceIdList, wait_time)
+            return render_template('index.html', id = id, status = status)
+            
+        elif request.form['action'] == 'Check':
+            FeedSubmissionId = request.form['sub_id1']
 
-        return redirect(url_for('index'))
+            get_prams_status(AWSAccessKeyId,Secre_Key, MWSAuthToken, SellerId, FeedSubmissionId, MarketplaceIdList)
+
+            return redirect(url_for('index'))
+
+        elif request.form['action'] == 'Check1':
+            FeedSubmissionId = request.form['sub_id1']
+
+            get_prams_status(AWSAccessKeyId,Secre_Key, MWSAuthToken, SellerId, FeedSubmissionId, MarketplaceIdList)
+            
+
+            return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
