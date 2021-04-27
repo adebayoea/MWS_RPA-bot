@@ -56,6 +56,7 @@ def upload():
 
             flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
             id, status = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, MarketplaceIdList, wait_time)
+            
             return render_template('index.html', id = id, status = status)
             
         elif request.form['action'] == 'Check':

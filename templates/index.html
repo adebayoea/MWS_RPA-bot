@@ -48,7 +48,7 @@
   <input type="text" id="market_place" name="market_place" >
   
  </div>
-          </form>
+          <!-- </form> -->
 
           <div class="tabs mt-30">
     <p class="tab is-active"><a href="#tab-one">Submit Inventory</a></p>
@@ -69,7 +69,8 @@
           </nav>
 
           <section class="tab-content is-active" id="tab-one">
-            <form id="app-form" action="/" method="POST" enctype="multipart/form-data">
+            <!-- <form id="app-form" action="/" method="POST" enctype="multipart/form-data"> -->
+              <div id="app-form">
               <div class="w-100">
                   <div class="">
                     <label for="file_path">File Path</label>
@@ -113,7 +114,8 @@
   <button  type="button" class="orange btn btns">Cancel</button>
 
 </div>
-</form>
+</div>
+<!-- </form> -->
 
           </section>
           <section class="tab-content" id="tab-two">
@@ -137,7 +139,7 @@
           </section>
 
           <section class="tab-content" id="tab-three">
-            <form method="POST" action="/">
+            <!-- <form method="POST" action="/"> -->
             <div class="">
               <label for="sub_id">Submission ID</label> 
               <input type="number" id="sub_id" name="sub_id" placeholder="Enter value here...">
@@ -152,7 +154,7 @@
               <button type="button" class="green btn btns mr-30" name="action" value="check1">Check</button>     
             
             </div>
-          </form>
+          <!-- </form> -->
           </section>
         </div>
       </div>
@@ -178,6 +180,7 @@
 <div>          <button  type="button" class="orange btn btns">Stop</button>
 </div>
       </div>
+      </form>
     </main>
     <script src="{{ url_for('static', filename= 'script.js')}}"></script>
   </body>
