@@ -18,7 +18,7 @@ def allowed_file(filename):
 def iso8601timestamp():
     current_time = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")
     timestamp = current_time[:-4] + "Z"
-    return timestamp
+    return timestamp[8:-5]
 
 
 def upload_file(file):
@@ -27,7 +27,7 @@ def upload_file(file):
         flash('No file selected for uploading')
         return redirect(request.url)
     if file and allowed_file(file.filename):
-        file.filename = "file{}.txt".format(iso8601timestamp())
+        file.filename = "file_{}.txt".format(iso8601timestamp())
         filename = secure_filename(file.filename)
         file.save(os.path.join(UPLOAD_FOLDER, filename))
         # name = os.path.join(app.config['UPLOAD_FOLDER'], fullname+'.jpeg')
@@ -54,16 +54,17 @@ def upload():
 
 # entering the create_upload_file
         if request.form['action'] == 'Start':
-            # chunk_size = request.form['chunk_size']
-            # chunk_start_postion = request.form['inventory_start_position']
-            # wait_time = request.form['request_interval']
-            # field_row = request.form['filed_row']
+            chunk_size = request.form['chunk_size']
+            chunk_start_postion = request.form['inventory_start_position']
+            wait_time = request.form['request_interval']
+            field_row = request.form['filed_row']
             fname = request.files['file_path']
             fname = upload_file(fname)
+            print("The file name is {} ".format(fname))
 
 
-            # flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
-            # id, status = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, MarketplaceIdList, wait_time)
+            flat_file_names = create_upload_file(fname, int(field_row), int(chunk_size), int(chunk_start_postion))
+            id, status = get_params(flat_file_names, Secre_Key, AWSAccessKeyId, MWSAuthToken, SellerId, MarketplaceIdList, wait_time)
             
             return render_template('index.html', id = id, status = status)
             
