@@ -1,0 +1,30 @@
+/// <summary>
+        /// tbd
+        /// </summary>
+        /// <param name="address">The sender address.</param>
+        /// <returns>
+        /// The response object with
+        /// HTTP status code.</returns>
+        [HttpPost("{address}/sendMessage")]
+        [Authorize(Policy = "IsUserOrClient")]
+        [ProducesResponseType(typeof(Response<SendMessageResult>), StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Response), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> sendm([FromRoute] string address, [FromBody] SendMessageData smd)
+        {
+            // always log every request
+            _logger.LogInformation("SendMessage data from REST API: {data}", JsonSerializer.Serialize(smd));
+            smd.Payload = smd.Payload.Clone();// make clone of JsonElement otherwise will be disposed with paren JsonDocument
+
+            // _mailboxService is initialized in the constructor
+            var response = await _mailboxService.SendMessageAsync(
+            new SendMessageRequest
+            {SenderAddress = address
+            ,RecipientAddresses = smd.RecipientAddresses,
+                Type = smd.Type, Payload = smd.Payload,
+                SentDateTime = DateTime.UtcNow, RequestId = Ulid.NewUlid().ToString()});
+
+            return ResponseToObjectResult(
+                response
+                , StatusCodes.Status202Accepted);
+        }
